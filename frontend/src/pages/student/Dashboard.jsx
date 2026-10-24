@@ -5,21 +5,21 @@ import Spinner from '../../components/Spinner.jsx';
 import { Badge, Card, EmptyState, ProgressBar, Ring, Stat } from '../../components/ui.jsx';
 import api, { parseError } from '../../services/api.js';
 import { LEVEL_TONE, fmtDate } from '../../utils/format.js';
-
-const AXIS = { fontSize: 12, fill: '#5E6B66' };
+import useChartColors from '../../hooks/useChartColors.js';
 
 function Chart({ data, lines, domain = [0, 100], empty }) {
+  const cc = useChartColors();
   if (!data.length) return <p className="py-10 text-center text-sm text-muted">{empty}</p>;
   return (
     <div className="h-60">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ left: -12, right: 8, top: 8 }}>
-          <CartesianGrid stroke="#D8DDD6" strokeDasharray="3 3" />
-          <XAxis dataKey={lines.x} tick={AXIS} />
-          <YAxis domain={domain} tick={AXIS} />
-          <Tooltip />
+          <CartesianGrid stroke={cc.grid} strokeDasharray="3 3" />
+          <XAxis dataKey={lines.x} tick={cc.axis_tick} stroke={cc.grid} />
+          <YAxis domain={domain} tick={cc.axis_tick} stroke={cc.grid} />
+          <Tooltip {...cc.tooltip} />
           {lines.series.length > 1 && <Legend />}
-          {lines.series.map((s) => <Line key={s.key} type="monotone" dataKey={s.key} name={s.name} stroke={s.color} strokeWidth={3} dot={{ r: 4 }} />)}
+          {lines.series.map((s) => <Line key={s.key} type="monotone" dataKey={s.key} name={s.name} stroke={cc[s.color]} strokeWidth={3} dot={{ r: 4 }} />)}
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -87,9 +87,9 @@ export default function StudentDashboard() {
       {noWeeks && <EmptyState title="Your growth charts start with your first weekly update" text="Log week 1 and your readiness, skill growth and CGPA trends will appear here." action={<Link to="/student/weekly-progress" className="btn-primary">Log week 1</Link>} />}
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card title="Skill growth"><Chart data={d.skillGrowth} lines={{ x: 'week', series: [{ key: 'avgSkill', name: 'Average skill %', color: '#0F5C4D' }] }} empty="No weekly records yet." /></Card>
-        <Card title="Career readiness by week"><Chart data={d.readinessTrend} lines={{ x: 'week', series: [{ key: 'careerReadiness', name: 'Career readiness %', color: '#0F5C4D' }, { key: 'overallProgress', name: 'Overall progress %', color: '#E3A32B' }] }} empty="No weekly records yet." /></Card>
-        <Card title="CGPA trend"><Chart data={d.cgpaTrend} domain={[0, 10]} lines={{ x: 'label', series: [{ key: 'cgpa', name: 'CGPA', color: '#0F5C4D' }] }} empty="No CGPA data yet." /></Card>
+        <Card title="Skill growth"><Chart data={d.skillGrowth} lines={{ x: 'week', series: [{ key: 'avgSkill', name: 'Average skill %', color: 'a' }] }} empty="No weekly records yet." /></Card>
+        <Card title="Career readiness by week"><Chart data={d.readinessTrend} lines={{ x: 'week', series: [{ key: 'careerReadiness', name: 'Career readiness %', color: 'a' }, { key: 'overallProgress', name: 'Overall progress %', color: 'b' }] }} empty="No weekly records yet." /></Card>
+        <Card title="CGPA trend"><Chart data={d.cgpaTrend} domain={[0, 10]} lines={{ x: 'label', series: [{ key: 'cgpa', name: 'CGPA', color: 'a' }] }} empty="No CGPA data yet." /></Card>
         <Card title="Skill development">
           {!d.skills.length ? <p className="py-6 text-center text-sm text-muted">No skills added yet. <Link className="font-semibold text-pine underline" to="/student/skills">Add a skill</Link></p> : (
             <ul className="space-y-3">

@@ -29,7 +29,7 @@ export default function CareerChain({ form, onChange, options, errors }) {
           <li key={step.key} className="flex gap-4">
             <div
               className={`mt-7 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
-                done ? 'bg-pine text-white' : 'border border-line bg-surface text-muted'
+                done ? 'bg-pine text-on-pine' : 'border border-line bg-surface text-muted'
               }`}
               aria-hidden="true"
             >

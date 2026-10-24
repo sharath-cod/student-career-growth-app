@@ -95,7 +95,7 @@ export default function Students() {
                   <td className="px-4 py-3">{s.cgpa ?? '-'}</td>
                   <td className="px-4 py-3">{s.domain || '-'}</td>
                   <td className="px-4 py-3">{s.jobRole || '-'}</td>
-                  <td className="px-4 py-3"><Badge className={s.readiness >= 75 ? 'bg-pine text-white' : s.readiness >= 40 ? 'bg-pine-light text-pine-dark' : 'bg-signal-light text-ink'}>{s.readiness}%</Badge></td>
+                  <td className="px-4 py-3"><Badge className={s.readiness >= 75 ? 'bg-pine text-on-pine' : s.readiness >= 40 ? 'bg-pine-light text-pine-dark' : 'bg-signal-light text-ink'}>{s.readiness}%</Badge></td>
                   <td className="px-4 py-3 text-muted">{s.lastUpdate ? fmtDate(s.lastUpdate) : 'Never'}</td>
                   <td className="px-4 py-3"><StudentActions student={s} /></td>
                 </tr>

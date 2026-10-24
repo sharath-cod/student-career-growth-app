@@ -7,7 +7,7 @@ import { useCatalog } from '../../hooks/useCatalog.js';
 import { useList } from '../../hooks/useList.js';
 import { fmtDate, joinTags, splitTags, toDateInput } from '../../utils/format.js';
 
-const TONE = { Planned: 'bg-signal-light text-ink', 'In Progress': 'bg-pine-light text-pine-dark', Completed: 'bg-pine text-white' };
+const TONE = { Planned: 'bg-signal-light text-ink', 'In Progress': 'bg-pine-light text-pine-dark', Completed: 'bg-pine text-on-pine' };
 
 export default function Projects() {
   const catalog = useCatalog();

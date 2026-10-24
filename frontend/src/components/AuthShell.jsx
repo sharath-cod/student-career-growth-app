@@ -1,3 +1,5 @@
+import ThemeToggle from './ThemeToggle.jsx';
+
 // Split-screen wrapper for login/register. The left panel shows a weekly growth
 // line: the single visual idea of the product (progress recorded week by week).
 const POINTS = [12, 18, 17, 29, 38, 36, 52, 61];
@@ -29,7 +31,7 @@ function GrowthLine() {
 export default function AuthShell({ title, subtitle, children, footer }) {
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.05fr_1fr]">
-      <aside className="hidden flex-col justify-between bg-pine-dark p-12 text-white lg:flex">
+      <aside className="hidden flex-col justify-between bg-sidebar p-12 text-white lg:flex">
         <div>
           <p className="font-display text-xl font-bold">Student Career Growth Tracker</p>
           <p className="mt-1 text-sm text-white/70">Student Progress, Skills &amp; Career Development Monitoring System</p>
@@ -44,7 +46,8 @@ export default function AuthShell({ title, subtitle, children, footer }) {
         <p className="text-xs text-white/50">Engineering College</p>
       </aside>
 
-      <main className="flex items-center justify-center px-5 py-12">
+      <main className="relative flex items-center justify-center px-5 py-12">
+        <ThemeToggle className="absolute right-5 top-5" />
         <div className="w-full max-w-md">
           <p className="mb-6 font-display text-lg font-bold text-pine lg:hidden">Student Career Growth Tracker</p>
           <h1 className="text-3xl font-bold">{title}</h1>

@@ -63,7 +63,7 @@ export default function WeeklyProgress() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge>Progress {w.overallProgress}%</Badge>
-                  <Badge className="bg-pine text-white">Readiness {w.careerReadiness}%</Badge>
+                  <Badge className="bg-pine text-on-pine">Readiness {w.careerReadiness}%</Badge>
                   <button className="rounded p-1.5 hover:bg-pine-light" onClick={() => setEditing(w)} aria-label={`Edit week ${w.weekNumber}`}><Pencil size={16} /></button>
                 </div>
               </div>

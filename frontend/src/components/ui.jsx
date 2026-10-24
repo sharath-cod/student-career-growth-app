@@ -21,7 +21,7 @@ export function Modal({ title, onClose, children, wide = false }) {
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
   }, [onClose]);
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-ink/50 p-4 sm:py-10" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-4 backdrop-blur-sm sm:py-10" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div role="dialog" aria-modal="true" aria-label={title} className={`card w-full ${wide ? 'max-w-3xl' : 'max-w-xl'} p-6 shadow-xl`}>
         <div className="mb-5 flex items-start justify-between gap-4">
           <h2 className="text-xl font-bold">{title}</h2>
@@ -39,7 +39,7 @@ export function ConfirmDialog({ title, message, confirmLabel = 'Delete', onConfi
       <p className="text-sm text-muted">{message}</p>
       <div className="mt-6 flex justify-end gap-3">
         <button className="btn-ghost" onClick={onCancel}>Cancel</button>
-        <button className="btn bg-danger text-white hover:opacity-90" onClick={onConfirm}>{confirmLabel}</button>
+        <button className="btn bg-danger text-on-danger hover:opacity-90" onClick={onConfirm}>{confirmLabel}</button>
       </div>
     </Modal>
   );
@@ -73,8 +73,8 @@ export function Ring({ value, size = 180, label = 'Career readiness' }) {
   return (
     <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }} role="img" aria-label={`${label}: ${v}%`}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#E3EFEA" strokeWidth={stroke} />
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#0F5C4D" strokeWidth={stroke} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - v / 100)} style={{ transition: 'stroke-dashoffset .6s' }} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgb(var(--pine-light))" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgb(var(--pine))" strokeWidth={stroke} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - v / 100)} style={{ transition: 'stroke-dashoffset .6s' }} />
       </svg>
       <div className="absolute text-center">
         <div className="font-display font-bold" style={{ fontSize: size / 3.6 }}>{v}%</div>

@@ -2,21 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colour tokens as space-separated RGB so Tailwind opacity modifiers (bg-ink/50) keep working. */
+:root {
+  --ink: 23 33 31;
+  --paper: 245 246 242;
+  --surface: 255 255 255;
+  --sidebar: 10 63 53;
+  --pine: 15 92 77;
+  --pine-dark: 10 63 53;
+  --pine-light: 227 239 234;
+  --pine-hover: 10 63 53;
+  --on-pine: 255 255 255;
+  --signal: 227 163 43;
+  --signal-light: 251 241 218;
+  --line: 216 221 214;
+  --muted: 94 107 102;
+  --danger: 179 64 47;
+  --danger-light: 251 234 230;
+  --on-danger: 255 255 255;
+  --shadow: 23 33 31;
+  --chart-grid: #D8DDD6;
+  --chart-axis: #5E6B66;
+  --chart-a: #0F5C4D;
+  --chart-b: #E3A32B;
+}
+
+.dark {
+  --ink: 232 238 235;
+  --paper: 11 17 16;
+  --surface: 19 28 26;
+  --sidebar: 7 22 19;
+  --pine: 52 179 148;
+  --pine-dark: 142 224 201;
+  --pine-light: 23 52 46;
+  --pine-hover: 92 203 176;
+  --on-pine: 4 32 26;
+  --signal: 240 183 66;
+  --signal-light: 56 44 17;
+  --line: 40 54 51;
+  --muted: 150 167 161;
+  --danger: 240 124 106;
+  --danger-light: 60 29 25;
+  --on-danger: 40 10 6;
+  --shadow: 0 0 0;
+  --chart-grid: #263633;
+  --chart-axis: #96A7A1;
+  --chart-a: #34B394;
+  --chart-b: #F0B742;
+}
+
 @layer base {
   html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
   body { @apply bg-paper font-sans text-ink antialiased; }
   h1, h2, h3 { @apply font-display tracking-tight; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-pine; outline-style: solid; }
+  /* Smooth theme change, but only while the toggle is used (class set by ThemeContext) */
+  html.theme-fade, html.theme-fade * { transition: background-color .25s ease, border-color .25s ease, color .25s ease !important; }
+  ::selection { background: rgb(var(--pine) / 0.28); }
 }
 
 @layer components {
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60; }
-  .btn-primary { @apply btn bg-pine text-white hover:bg-pine-dark; }
+  .btn-primary { @apply btn bg-pine text-on-pine shadow-sm hover:bg-pine-hover; }
   .btn-ghost { @apply btn border border-line bg-surface text-ink hover:bg-pine-light; }
-  .input { @apply w-full rounded-md border border-line bg-surface px-3 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-pine; }
+  .input { @apply w-full rounded-md border border-line bg-surface px-3 py-2.5 text-sm text-ink placeholder:text-muted/70 transition-colors focus:border-pine; }
   .input-error { @apply border-danger; }
-  .card { @apply rounded-card border border-line bg-surface; }
+  .card { @apply rounded-card border border-line bg-surface shadow-card; }
+  .icon-btn { @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-pine-light; }
 }
+
+/* Native form controls and the date picker follow the theme */
+.dark input[type='date']::-webkit-calendar-picker-indicator { filter: invert(1); }
+.dark select option { background: rgb(var(--surface)); color: rgb(var(--ink)); }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

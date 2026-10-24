@@ -10,12 +10,14 @@ import { Badge, Card, EmptyState, ProgressBar, Ring } from '../../components/ui.
 import { useCatalog } from '../../hooks/useCatalog.js';
 import api, { parseError } from '../../services/api.js';
 import { openFile } from '../../services/files.js';
+import useChartColors from '../../hooks/useChartColors.js';
 import { LEVEL_TONE, fmtDate, monthsText } from '../../utils/format.js';
 
 const Row = ({ k, v }) => <div><dt className="text-sm text-muted">{k}</dt><dd className="font-medium">{v === undefined || v === null || v === '' ? '-' : v}</dd></div>;
 const str = (v) => (v === undefined || v === null ? '' : String(v));
 
 export default function StudentDetail() {
+  const cc = useChartColors();
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
   const catalog = useCatalog();
@@ -91,9 +93,9 @@ export default function StudentDetail() {
             <p className="mb-3 text-sm text-muted">Previous {d.weekly.previous === null ? '-' : `${d.weekly.previous}%`} → Current {d.weekly.current}% {d.weekly.growth !== null && <b className="text-ink">({d.weekly.growth >= 0 ? '+' : ''}{d.weekly.growth}%)</b>}</p>
             <div className="h-56"><ResponsiveContainer width="100%" height="100%">
               <LineChart data={d.readinessTrend} margin={{ left: -12, right: 8, top: 8 }}>
-                <CartesianGrid stroke="#D8DDD6" strokeDasharray="3 3" /><XAxis dataKey="week" tick={{ fontSize: 12 }} /><YAxis domain={[0, 100]} tick={{ fontSize: 12 }} /><Tooltip /><Legend />
-                <Line type="monotone" dataKey="careerReadiness" name="Career readiness %" stroke="#0F5C4D" strokeWidth={3} />
-                <Line type="monotone" dataKey="overallProgress" name="Overall progress %" stroke="#E3A32B" strokeWidth={3} />
+                <CartesianGrid stroke={cc.grid} strokeDasharray="3 3" /><XAxis dataKey="week" tick={cc.axis_tick} stroke={cc.grid} /><YAxis domain={[0, 100]} tick={cc.axis_tick} stroke={cc.grid} /><Tooltip {...cc.tooltip} /><Legend />
+                <Line type="monotone" dataKey="careerReadiness" name="Career readiness %" stroke={cc.a} strokeWidth={3} />
+                <Line type="monotone" dataKey="overallProgress" name="Overall progress %" stroke={cc.b} strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer></div>
             <div className="mt-4 overflow-x-auto"><table className="w-full min-w-[520px] text-left text-sm">
